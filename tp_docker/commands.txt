@@ -1,0 +1,28 @@
+minikube start
+
+kubectl apply -f front-back.yaml
+kubectl apply -f ingress.yaml
+
+### MYSQL ###
+cd mysql
+kubectl apply -f mysql-secret.yaml
+kubectl apply -f mysql-storage.yaml
+kubectl apply -f mysql-deployment.yaml
+kubectl apply -f mysql-serviceNodePort.yaml
+
+kubetctl get pods
+kubectl exec --stdin --tty <podname> -- mysql -ptest1234
+
+create database db_example;
+create user 'pythonuser'@'%' identified by 'test1234';
+grant all on db_example.* to 'pythonuser'@'%';
+USE db_example;
+
+CREATE TABLE students (id INT AUTO_INCREMENT, name VARCHAR(50) NOT NULL, surname VARCHAR(50) NOT NULL, st_number INT UNIQUE NOT NULL, PRIMARY KEY(id)) ENGINE=InnoDB;
+
+INSERT INTO students(name, surname, st_number) VALUES ('Nicolas', 'Pluven', 21907722);
+INSERT INTO students(name, surname, st_number) VALUES ('Theophile', 'Romieu', 22306075);
+
+###
+
+curl --resolve "frontend.localhost:80:$( minikube ip )" -i http://frontend.localhost
