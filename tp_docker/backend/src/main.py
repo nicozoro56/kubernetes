@@ -18,13 +18,16 @@ class Handler(BaseHTTPRequestHandler):
           try:
             cnx = mysql.connector.connect(user='pythonuser', password='test1234', host='mysql', database='db_example')
             l = []
-            with cnx.cursor as cursor:
+            with cnx.cursor() as cursor:
               result = cursor.execute("SELECT * FROM students")
               rows = cursor.fetchall()
               for row in rows:
                 l.append({"name": row[1], "surname": row[2], "student number":row[3]})
           except (mysql.connector.Error, IOError) as err:
-            print(err)
+            self.send_response(500)
+            self.send_header("Content-type", "text/html")
+            self.wfile.write(str(err).encode())
+            cnx.close()
             return
           self.send_response(200)
           self.send_header("Content-type", "application/json")

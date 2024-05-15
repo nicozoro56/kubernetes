@@ -13,7 +13,7 @@ spec:
         app: myservice
     spec:
       containers:
-        - image: nicopl5/myservice:1
+        - image: truitedockerhub/pythonserver:1
           imagePullPolicy: IfNotPresent
           name: myservice
       restartPolicy: Always

@@ -19,7 +19,7 @@ class Handler(BaseHTTPRequestHandler):
           self.send_response(200)
           self.send_header("Content-type", "application/json")
           self.end_headers()
-          content = "{1:2}".encode()
+          content = ''.encode()
           with urllib.request.urlopen(backendURL) as url:
             content = json.dumps(json.load(url)).encode()
             
