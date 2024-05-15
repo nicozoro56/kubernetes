@@ -2,6 +2,7 @@ FROM python:3.10.14-alpine3.19
 
 VOLUME /tmp
 
+RUN rm -rf /app
 COPY . /app
 
 WORKDIR /app/src

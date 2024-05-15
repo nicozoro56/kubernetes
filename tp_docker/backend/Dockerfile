@@ -3,6 +3,7 @@ ENV PYTHONUNBUFFERED=1
 
 VOLUME /tmp
 
+RUN rm -rf /app
 COPY . /app
 
 WORKDIR /app/src
